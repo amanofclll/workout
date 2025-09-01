@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Workout Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .gradient-bg {
+            background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center py-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-2">Weekly Workout Plan</h1>
+            <p class="text-lg md:text-xl text-gray-600">Stay on track with your fitness goals!</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Monday -->
+            <div class="card p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Monday: Chest & Triceps</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="mr-2 text-blue-500 font-bold">•</span>
+                        <span>Dumbbell Bench Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-blue-500 font-bold">•</span>
+                        <span>Incline Dumbbell Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-blue-500 font-bold">•</span>
+                        <span>Cable Flyes: <span class="font-semibold">3 sets of 10-12 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-blue-500 font-bold">•</span>
+                        <span>Triceps Pushdowns (Rope or Bar): <span class="font-semibold">3 sets of 10-12 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-blue-500 font-bold">•</span>
+                        <span>Overhead Triceps Extension: <span class="font-semibold">3 sets of 10-12 reps</span></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tuesday -->
+            <div class="card p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Tuesday: Back & Biceps</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="mr-2 text-green-500 font-bold">•</span>
+                        <span>Pull-ups or Lat Pulldowns: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-green-500 font-bold">•</span>
+                        <span>Bent-Over Rows: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-green-500 font-bold">•</span>
+                        <span>Single-Arm Dumbbell Rows: <span class="font-semibold">3 sets of 10-12 reps per arm</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-green-500 font-bold">•</span>
+                        <span>Dumbbell Bicep Curls: <span class="font-semibold">3 sets of 10-12 reps per arm</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-green-500 font-bold">•</span>
+                        <span>Hammer Curls: <span class="font-semibold">3 sets of 10-12 reps</span></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Wednesday -->
+            <div class="card p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Wednesday: Legs & Shoulders</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="mr-2 text-red-500 font-bold">•</span>
+                        <span>Barbell Squats: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-red-500 font-bold">•</span>
+                        <span>Leg Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-red-500 font-bold">•</span>
+                        <span>Romanian Deadlifts (RDLs): <span class="font-semibold">3 sets of 10-12 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-red-500 font-bold">•</span>
+                        <span>Seated Dumbbell Shoulder Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2 text-red-500 font-bold">•</span>
+                        <span>Lateral Raises: <span class="font-semibold">3 sets of 12-15 reps</span></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Thursday -->
+            <div class="card p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Thursday: Rest or Active Recovery</h2>
+                <p class="text-gray-700">This is a crucial day for muscle recovery and growth. You can do light cardio (e.g., walking, cycling) or stretching. Avoid lifting weights.</p>
+            </div>
+
+            <!-- Friday -->
+            <div class="card p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Friday: Full Body or Repeat</h2>
+                <p class="text-gray-700 mb-3">You have a few options for Friday, depending on your energy levels and goals.</p>
+                <div class="space-y-3">
+                    <p class="font-semibold text-gray-800">Option A (Full Body):</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="mr-2 text-purple-500 font-bold">•</span>
+                            <span>Barbell Squats: 3 sets of 8-10 reps</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-purple-500 font-bold">•</span>
+                            <span>Dumbbell Bench Press: 3 sets of 8-10 reps</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-purple-500 font-bold">•</span>
+                            <span>Bent-Over Rows: 3 sets of 8-10 reps</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 text-purple-500 font-bold">•</span>
+                            <span>Overhead Press: 3 sets of 8-10 reps</span>
+                        </li>
+                    </ul>
+                    <p class="font-semibold text-gray-800">Option B (Repeat):</p>
+                    <p class="text-gray-700">Pick one of the previous workouts (e.g., Legs & Shoulders) and perform it again.</p>
+                    <p class="font-semibold text-gray-800">Option C (Rest):</p>
+                    <p class="text-gray-700">If you feel you need more recovery, take a second rest day.</p>
+                </div>
+            </div>
+
+            <!-- Saturday & Sunday -->
+            <div class="card p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Saturday & Sunday: Rest</h2>
+                <p class="text-gray-700">Allow your body to recover completely. This is when your muscles repair and grow stronger. Enjoy your time off!</p>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>
