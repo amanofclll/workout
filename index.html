@@ -14,7 +14,7 @@
             --primary: #4f46e5;
             --primary-hover: #4338ca;
             --expense: #ef4444;
-            --budget: #10b981;
+            --income: #10b981;
             --borrowed: #f59e0b;
             --lent: #8b5cf6;
             --border: #e5e7eb;
@@ -69,18 +69,19 @@
         .card.hero {
             grid-column: span 2;
             text-align: center;
-            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: white;
             padding: 30px 20px;
         }
 
         .card.hero h3 {
-            color: rgba(255, 255, 255, 0.8);
+            color: #cbd5e1;
+            margin-bottom: 10px;
         }
 
         .card.hero p {
             color: white;
-            font-size: 36px;
+            font-size: 40px;
         }
 
         .card h3 {
@@ -93,11 +94,11 @@
         }
 
         .card p {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
         }
 
-        .c-budget { color: var(--budget); }
+        .c-income { color: var(--income); }
         .c-expense { color: var(--expense); }
         .c-borrowed { color: var(--borrowed); }
         .c-lent { color: var(--lent); }
@@ -198,12 +199,13 @@
         }
 
         .t-badge {
-            width: 10px;
+            width: 8px;
             height: 40px;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
         .bg-expense { background-color: var(--expense); }
+        .bg-income { background-color: var(--income); }
         .bg-borrowed { background-color: var(--borrowed); }
         .bg-lent { background-color: var(--lent); }
 
@@ -266,16 +268,16 @@
     <!-- Dashboard -->
     <div class="dashboard">
         <div class="card hero">
-            <h3>Remaining Budget</h3>
-            <p id="remaining-budget">₹0</p>
+            <h3>Available Balance</h3>
+            <p id="available-balance">₹0</p>
+        </div>
+        <div class="card">
+            <h3>Total Income</h3>
+            <p class="c-income" id="total-income">₹0</p>
         </div>
         <div class="card">
             <h3>Total Expenses</h3>
             <p class="c-expense" id="total-expenses">₹0</p>
-        </div>
-        <div class="card">
-            <h3>Budget Limit</h3>
-            <p id="budget-limit-display">₹0</p>
         </div>
         <div class="card">
             <h3>Borrowed (I Owe)</h3>
@@ -287,10 +289,11 @@
         </div>
     </div>
 
-    <!-- Set Budget Form -->
+    <!-- Set Starting Balance -->
     <div class="form-section">
-        <h3 class="section-title">Monthly Budget</h3>
-        <div class="input-group">
+        <h3 class="section-title">Starting Balance / Base Budget</h3>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Money you already had before tracking income/expenses.</p>
+        <div class="input-group" style="margin-bottom: 0;">
             <input type="number" id="budget-input" placeholder="Enter Amount">
             <button class="btn-small" onclick="setBudget()">Save</button>
         </div>
@@ -299,13 +302,14 @@
     <!-- Add Transaction Form -->
     <div class="form-section">
         <h3 class="section-title">New Transaction</h3>
-        <input type="text" id="desc" placeholder="What was this for? (e.g., Groceries)">
+        <input type="text" id="desc" placeholder="What was this for? (Client, Groceries)">
         <div class="input-group">
             <input type="number" id="amount" placeholder="Amount (₹)">
             <input type="date" id="t-date">
         </div>
         <select id="type">
             <option value="expense">Expense (Money Spent)</option>
+            <option value="income">Income (Received Money / Salary)</option>
             <option value="borrowed">Borrowed (Received a loan)</option>
             <option value="lent">Lent (Gave a loan)</option>
         </select>
@@ -339,6 +343,7 @@
         // 2. Update the UI
         function updateUI() {
             let totalExpense = 0;
+            let totalIncome = 0;
             let totalBorrowed = 0;
             let totalLent = 0;
 
@@ -351,23 +356,36 @@
             }
 
             transactions.forEach((t, index) => {
-                if (t.type === 'expense') totalExpense += t.amount;
-                if (t.type === 'borrowed') totalBorrowed += t.amount;
-                if (t.type === 'lent') totalLent += t.amount;
+                let badgeClass = '';
+                let amountColor = '';
+                let typeLabel = '';
+                let sign = '';
 
-                // Determine badge color and label based on type
-                let badgeClass = 'bg-expense';
-                let amountColor = 'c-expense';
-                let typeLabel = 'Expense';
-                
-                if (t.type === 'borrowed') {
+                // Categorize each transaction
+                if (t.type === 'expense') {
+                    totalExpense += t.amount;
+                    badgeClass = 'bg-expense';
+                    amountColor = 'c-expense';
+                    typeLabel = 'Expense';
+                    sign = '-';
+                } else if (t.type === 'income') {
+                    totalIncome += t.amount;
+                    badgeClass = 'bg-income';
+                    amountColor = 'c-income';
+                    typeLabel = 'Income';
+                    sign = '+';
+                } else if (t.type === 'borrowed') {
+                    totalBorrowed += t.amount;
                     badgeClass = 'bg-borrowed';
                     amountColor = 'c-borrowed';
                     typeLabel = 'Borrowed';
+                    sign = '+';
                 } else if (t.type === 'lent') {
+                    totalLent += t.amount;
                     badgeClass = 'bg-lent';
                     amountColor = 'c-lent';
                     typeLabel = 'Lent';
+                    sign = '-';
                 }
 
                 // Format the display date
@@ -386,24 +404,34 @@
                         </div>
                     </div>
                     <div class="t-right">
-                        <span class="t-amount ${amountColor}">${formatMoney(t.amount)}</span>
+                        <span class="t-amount ${amountColor}">${sign}${formatMoney(t.amount)}</span>
                         <button class="delete-btn" onclick="deleteTransaction(${index})">Remove</button>
                     </div>
                 `;
                 listElement.appendChild(div);
             });
 
+            // Calculate Available Balance
+            // Formula: Starting Budget + Income + Borrowed (Cash in) - Expenses - Lent (Cash out)
+            let availableBalance = budget + totalIncome + totalBorrowed - totalExpense - totalLent;
+
             // Update Dashboard UI
-            document.getElementById('budget-limit-display').innerText = formatMoney(budget);
+            document.getElementById('total-income').innerText = formatMoney(totalIncome);
             document.getElementById('total-expenses').innerText = formatMoney(totalExpense);
             document.getElementById('total-borrowed').innerText = formatMoney(totalBorrowed);
             document.getElementById('total-lent').innerText = formatMoney(totalLent);
             
-            let remaining = budget - totalExpense;
-            let remainingEl = document.getElementById('remaining-budget');
-            remainingEl.innerText = formatMoney(remaining);
+            let balanceEl = document.getElementById('available-balance');
+            balanceEl.innerText = formatMoney(availableBalance);
             
-            // Save state
+            // Turn balance red if you are in the negative
+            if(availableBalance < 0) {
+                balanceEl.style.color = '#fca5a5'; // Light red so it's readable on dark background
+            } else {
+                balanceEl.style.color = 'white';
+            }
+            
+            // Save state to local device storage
             localStorage.setItem('myTransactions', JSON.stringify(transactions));
             localStorage.setItem('myBudget', budget);
         }
@@ -421,9 +449,9 @@
             }
 
             const transaction = { desc, amount, type, date, id: Date.now() };
-            transactions.unshift(transaction); // Add to beginning of array
+            transactions.unshift(transaction); // Add to top of list
 
-            // Reset inputs
+            // Reset text inputs but keep the date as today
             document.getElementById('desc').value = '';
             document.getElementById('amount').value = '';
             document.getElementById('t-date').valueAsDate = new Date();
@@ -431,7 +459,7 @@
             updateUI();
         }
 
-        // 4. Set Budget
+        // 4. Set Starting Budget
         function setBudget() {
             const input = parseFloat(document.getElementById('budget-input').value);
             if (!isNaN(input) && input >= 0) {
