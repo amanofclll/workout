@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Money Manager</title>
+    <title>My Money Manager Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -58,7 +58,7 @@
 
         .card {
             background-color: var(--card-bg);
-            padding: 20px;
+            padding: 18px;
             border-radius: 16px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             display: flex;
@@ -71,31 +71,30 @@
             text-align: center;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: white;
-            padding: 30px 20px;
+            padding: 25px 20px;
         }
 
-        .card.hero h3 {
-            color: #cbd5e1;
-            margin-bottom: 10px;
-        }
-
-        .card.hero p {
-            color: white;
-            font-size: 40px;
-        }
+        .card.hero h3 { color: #cbd5e1; margin-bottom: 5px; }
+        .card.hero p { color: white; font-size: 36px; }
 
         .card h3 {
-            font-size: 13px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
         .card p {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
+        }
+
+        .card small {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
         }
 
         .c-income { color: var(--income); }
@@ -103,10 +102,10 @@
         .c-borrowed { color: var(--borrowed); }
         .c-lent { color: var(--lent); }
 
-        /* Forms */
+        /* Forms & Containers */
         .section-title {
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 16px;
+            margin-bottom: 12px;
             font-weight: 600;
             color: var(--text-main);
         }
@@ -119,6 +118,25 @@
             margin-bottom: 25px;
         }
 
+        .config-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .config-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .config-field label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
         .input-group {
             display: flex;
             gap: 10px;
@@ -127,10 +145,10 @@
 
         input, select, button {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: 1px solid var(--border);
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
             transition: border-color 0.2s ease;
         }
@@ -144,20 +162,11 @@
             color: white;
             border: none;
             font-weight: 600;
-            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
 
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-small {
-            width: auto;
-            padding: 14px 20px;
-            flex-shrink: 0;
-        }
+        button:hover { background-color: var(--primary-hover); }
 
         .btn-danger {
             background-color: transparent;
@@ -183,69 +192,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border);
         }
 
-        .transaction:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
+        .transaction:last-child { border-bottom: none; padding-bottom: 0; }
 
-        .t-left {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .t-badge {
-            width: 8px;
-            height: 40px;
-            border-radius: 4px;
-        }
+        .t-left { display: flex; gap: 12px; align-items: center; }
+        .t-badge { width: 6px; height: 36px; border-radius: 3px; }
 
         .bg-expense { background-color: var(--expense); }
         .bg-income { background-color: var(--income); }
         .bg-borrowed { background-color: var(--borrowed); }
         .bg-lent { background-color: var(--lent); }
 
-        .t-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .t-info { display: flex; flex-direction: column; gap: 2px; }
+        .t-desc { font-weight: 600; color: var(--text-main); font-size: 14px; }
+        .t-date { font-size: 11px; color: var(--text-muted); }
 
-        .t-desc {
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 15px;
-        }
-
-        .t-date {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .t-right {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
-        .t-amount {
-            font-weight: 700;
-            font-size: 16px;
-        }
+        .t-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+        .t-amount { font-weight: 700; font-size: 15px; }
 
         .delete-btn {
             background: #fef2f2;
             color: var(--expense);
             border: none;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
             cursor: pointer;
             width: auto;
             margin: 0;
@@ -255,7 +229,7 @@
             text-align: center;
             color: var(--text-muted);
             padding: 20px 0;
-            font-size: 14px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -280,6 +254,16 @@
             <p class="c-expense" id="total-expenses">₹0</p>
         </div>
         <div class="card">
+            <h3>Expense Limit</h3>
+            <p id="limit-display">₹0</p>
+            <small id="limit-status">No limit set</small>
+        </div>
+        <div class="card">
+            <h3>Savings Goal</h3>
+            <p id="savings-display">₹0</p>
+            <small id="savings-status">No goal set</small>
+        </div>
+        <div class="card">
             <h3>Borrowed (I Owe)</h3>
             <p class="c-borrowed" id="total-borrowed">₹0</p>
         </div>
@@ -289,20 +273,30 @@
         </div>
     </div>
 
-    <!-- Set Starting Balance -->
+    <!-- Configuration Panel -->
     <div class="form-section">
-        <h3 class="section-title">Starting Balance / Base Budget</h3>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Money you already had before tracking income/expenses.</p>
-        <div class="input-group" style="margin-bottom: 0;">
-            <input type="number" id="budget-input" placeholder="Enter Amount">
-            <button class="btn-small" onclick="setBudget()">Save</button>
+        <h3 class="section-title">Targets & Settings</h3>
+        <div class="config-row">
+            <div class="config-field">
+                <label for="budget-input">Base Budget</label>
+                <input type="number" id="budget-input" placeholder="₹">
+            </div>
+            <div class="config-field">
+                <label for="limit-input">Expense Limit</label>
+                <input type="number" id="limit-input" placeholder="₹">
+            </div>
+            <div class="config-field">
+                <label for="savings-input">Savings Goal</label>
+                <input type="number" id="savings-input" placeholder="₹">
+            </div>
         </div>
+        <button onclick="saveConfigurations()">Save Targets</button>
     </div>
 
     <!-- Add Transaction Form -->
     <div class="form-section">
         <h3 class="section-title">New Transaction</h3>
-        <input type="text" id="desc" placeholder="What was this for? (Client, Groceries)">
+        <input type="text" id="desc" placeholder="What was this for? (e.g., Client, Groceries)">
         <div class="input-group">
             <input type="number" id="amount" placeholder="Amount (₹)">
             <input type="date" id="t-date">
@@ -328,17 +322,25 @@
     <button class="btn-danger" onclick="clearAllData()">Clear All Data (Start Fresh)</button>
 
     <script>
-        // 1. Initialize data
+        // 1. Initialize data from LocalStorage
         let budget = parseFloat(localStorage.getItem('myBudget')) || 0;
+        let expenseLimit = parseFloat(localStorage.getItem('myExpenseLimit')) || 0;
+        let savingsGoal = parseFloat(localStorage.getItem('mySavingsGoal')) || 0;
         let transactions = JSON.parse(localStorage.getItem('myTransactions')) || [];
 
-        // Set default date in input to today
+        // Pre-fill setup inputs with current data if it exists
+        if(budget) document.getElementById('budget-input').value = budget;
+        if(expenseLimit) document.getElementById('limit-input').value = expenseLimit;
+        if(savingsGoal) document.getElementById('savings-input').value = savingsGoal;
+        
         document.getElementById('t-date').valueAsDate = new Date();
 
-        // Helper function to format money nicely with commas
         function formatMoney(amount) {
             return '₹' + amount.toLocaleString('en-IN');
         }
+
+        // Global trackers for validation calculations
+        let dynamicTotalExpenses = 0;
 
         // 2. Update the UI
         function updateUI() {
@@ -350,49 +352,30 @@
             const listElement = document.getElementById('transaction-list');
             listElement.innerHTML = '';
 
-            // Handle empty state
             if (transactions.length === 0) {
                 listElement.innerHTML = '<p class="empty-state">No transactions yet. Add one above!</p>';
             }
 
             transactions.forEach((t, index) => {
-                let badgeClass = '';
-                let amountColor = '';
-                let typeLabel = '';
-                let sign = '';
+                let badgeClass, amountColor, typeLabel, sign;
 
-                // Categorize each transaction
                 if (t.type === 'expense') {
                     totalExpense += t.amount;
-                    badgeClass = 'bg-expense';
-                    amountColor = 'c-expense';
-                    typeLabel = 'Expense';
-                    sign = '-';
+                    badgeClass = 'bg-expense'; amountColor = 'c-expense'; typeLabel = 'Expense'; sign = '-';
                 } else if (t.type === 'income') {
                     totalIncome += t.amount;
-                    badgeClass = 'bg-income';
-                    amountColor = 'c-income';
-                    typeLabel = 'Income';
-                    sign = '+';
+                    badgeClass = 'bg-income'; amountColor = 'c-income'; typeLabel = 'Income'; sign = '+';
                 } else if (t.type === 'borrowed') {
                     totalBorrowed += t.amount;
-                    badgeClass = 'bg-borrowed';
-                    amountColor = 'c-borrowed';
-                    typeLabel = 'Borrowed';
-                    sign = '+';
+                    badgeClass = 'bg-borrowed'; amountColor = 'c-borrowed'; typeLabel = 'Borrowed'; sign = '+';
                 } else if (t.type === 'lent') {
                     totalLent += t.amount;
-                    badgeClass = 'bg-lent';
-                    amountColor = 'c-lent';
-                    typeLabel = 'Lent';
-                    sign = '-';
+                    badgeClass = 'bg-lent'; amountColor = 'c-lent'; typeLabel = 'Lent'; sign = '-';
                 }
 
-                // Format the display date
                 const dateObj = new Date(t.date);
-                const dateString = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+                const dateString = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 
-                // Create transaction element
                 const div = document.createElement('div');
                 div.classList.add('transaction');
                 div.innerHTML = `
@@ -411,11 +394,12 @@
                 listElement.appendChild(div);
             });
 
-            // Calculate Available Balance
-            // Formula: Starting Budget + Income + Borrowed (Cash in) - Expenses - Lent (Cash out)
+            dynamicTotalExpenses = totalExpense;
+
+            // Math: Starting Budget + Income + Borrowed - Expenses - Lent
             let availableBalance = budget + totalIncome + totalBorrowed - totalExpense - totalLent;
 
-            // Update Dashboard UI
+            // Update basic dashboard numbers
             document.getElementById('total-income').innerText = formatMoney(totalIncome);
             document.getElementById('total-expenses').innerText = formatMoney(totalExpense);
             document.getElementById('total-borrowed').innerText = formatMoney(totalBorrowed);
@@ -423,20 +407,52 @@
             
             let balanceEl = document.getElementById('available-balance');
             balanceEl.innerText = formatMoney(availableBalance);
-            
-            // Turn balance red if you are in the negative
-            if(availableBalance < 0) {
-                balanceEl.style.color = '#fca5a5'; // Light red so it's readable on dark background
+            balanceEl.style.color = (availableBalance < 0) ? '#fca5a5' : 'white';
+
+            // Update Expense Limit Module
+            document.getElementById('limit-display').innerText = formatMoney(expenseLimit);
+            let limitStatusEl = document.getElementById('limit-status');
+            if (expenseLimit > 0) {
+                let remainingLimit = expenseLimit - totalExpense;
+                if (remainingLimit <= 0) {
+                    limitStatusEl.innerText = "Limit Maxed Out!";
+                    limitStatusEl.style.color = "var(--expense)";
+                } else {
+                    limitStatusEl.innerText = `${formatMoney(remainingLimit)} left before limit`;
+                    limitStatusEl.style.color = "var(--text-muted)";
+                }
             } else {
-                balanceEl.style.color = 'white';
+                limitStatusEl.innerText = "No limit restrictions";
+                limitStatusEl.style.color = "var(--text-muted)";
+            }
+
+            // Update Savings Goal Module
+            document.getElementById('savings-display').innerText = formatMoney(savingsGoal);
+            let savingsStatusEl = document.getElementById('savings-status');
+            if (savingsGoal > 0) {
+                // Effective savings: What you possess without debt considerations
+                let trueSavings = budget + totalIncome - totalExpense; 
+                if (trueSavings >= savingsGoal) {
+                    savingsStatusEl.innerText = "Savings Goal Reached! 🎉";
+                    savingsStatusEl.style.color = "var(--income)";
+                } else {
+                    let needed = savingsGoal - trueSavings;
+                    savingsStatusEl.innerText = `${formatMoney(needed)} more to reach goal`;
+                    savingsStatusEl.style.color = "var(--text-muted)";
+                }
+            } else {
+                savingsStatusEl.innerText = "No active goal";
+                savingsStatusEl.style.color = "var(--text-muted)";
             }
             
-            // Save state to local device storage
+            // Persistent saving
             localStorage.setItem('myTransactions', JSON.stringify(transactions));
             localStorage.setItem('myBudget', budget);
+            localStorage.setItem('myExpenseLimit', expenseLimit);
+            localStorage.setItem('mySavingsGoal', savingsGoal);
         }
 
-        // 3. Add transaction
+        // 3. Add transaction with safety checking
         function addTransaction() {
             const desc = document.getElementById('desc').value;
             const amount = parseFloat(document.getElementById('amount').value);
@@ -448,10 +464,17 @@
                 return;
             }
 
-            const transaction = { desc, amount, type, date, id: Date.now() };
-            transactions.unshift(transaction); // Add to top of list
+            // Strict Over-Expense Check
+            if (type === 'expense' && expenseLimit > 0) {
+                if ((dynamicTotalExpenses + amount) > expenseLimit) {
+                    alert(`🚨 TRANSACTION BLOCKED!\n\nAdding this expense (${formatMoney(amount)}) will push your total expenditures to ${formatMoney(dynamicTotalExpenses + amount)}, which violates your strict maximum expense limit of ${formatMoney(expenseLimit)}.`);
+                    return;
+                }
+            }
 
-            // Reset text inputs but keep the date as today
+            const transaction = { desc, amount, type, date, id: Date.now() };
+            transactions.unshift(transaction);
+
             document.getElementById('desc').value = '';
             document.getElementById('amount').value = '';
             document.getElementById('t-date').valueAsDate = new Date();
@@ -459,17 +482,21 @@
             updateUI();
         }
 
-        // 4. Set Starting Budget
-        function setBudget() {
-            const input = parseFloat(document.getElementById('budget-input').value);
-            if (!isNaN(input) && input >= 0) {
-                budget = input;
-                document.getElementById('budget-input').value = '';
-                updateUI();
-            }
+        // 4. Save Targets Configuration
+        function saveConfigurations() {
+            const bInput = parseFloat(document.getElementById('budget-input').value);
+            const lInput = parseFloat(document.getElementById('limit-input').value);
+            const sInput = parseFloat(document.getElementById('savings-input').value);
+
+            budget = (!isNaN(bInput) && bInput >= 0) ? bInput : 0;
+            expenseLimit = (!isNaN(lInput) && lInput >= 0) ? lInput : 0;
+            savingsGoal = (!isNaN(sInput) && sInput >= 0) ? sInput : 0;
+
+            alert("Targets updated successfully!");
+            updateUI();
         }
 
-        // 5. Delete single transaction
+        // 5. Delete individual transaction
         function deleteTransaction(index) {
             if(confirm("Are you sure you want to delete this transaction?")) {
                 transactions.splice(index, 1);
@@ -477,18 +504,22 @@
             }
         }
 
-        // 6. Clear everything
+        // 6. Reset device storage completely
         function clearAllData() {
-            if(confirm("WARNING: This will delete all your budget and transaction history. Are you sure?")) {
-                localStorage.removeItem('myTransactions');
-                localStorage.removeItem('myBudget');
+            if(confirm("WARNING: This will clear all calculations, targets, and history permanently. Continue?")) {
+                localStorage.clear();
                 transactions = [];
                 budget = 0;
+                expenseLimit = 0;
+                savingsGoal = 0;
+                document.getElementById('budget-input').value = '';
+                document.getElementById('limit-input').value = '';
+                document.getElementById('savings-input').value = '';
                 updateUI();
             }
         }
 
-        // Initialize UI on load
+        // Initialization execution
         updateUI();
     </script>
 </body>
