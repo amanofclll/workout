@@ -3,165 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly Workout Plan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>My Money Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root {
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --expense: #ef4444;
+            --budget: #10b981;
+            --borrowed: #f59e0b;
+            --lent: #8b5cf6;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
         }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px 15px;
+            max-width: 600px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h2 {
+            color: var(--text-main);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
         .card {
-            background-color: white;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+
+        .card.hero {
+            grid-column: span 2;
+            text-align: center;
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px 20px;
         }
-        .gradient-bg {
-            background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+
+        .card.hero h3 {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card.hero p {
+            color: white;
+            font-size: 36px;
+        }
+
+        .card h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .c-budget { color: var(--budget); }
+        .c-expense { color: var(--expense); }
+        .c-borrowed { color: var(--borrowed); }
+        .c-lent { color: var(--lent); }
+
+        /* Forms */
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-small {
+            width: auto;
+            padding: 14px 20px;
+            flex-shrink: 0;
+        }
+
+        .btn-danger {
+            background-color: transparent;
+            color: var(--expense);
+            border: 1px solid var(--expense);
+            margin-top: 20px;
+        }
+
+        .btn-danger:hover {
+            background-color: var(--expense);
+            color: white;
+        }
+
+        /* History List */
+        .history {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transaction:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .t-left {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .t-badge {
+            width: 10px;
+            height: 40px;
+            border-radius: 5px;
+        }
+
+        .bg-expense { background-color: var(--expense); }
+        .bg-borrowed { background-color: var(--borrowed); }
+        .bg-lent { background-color: var(--lent); }
+
+        .t-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .t-desc {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 15px;
+        }
+
+        .t-date {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .t-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .t-amount {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .delete-btn {
+            background: #fef2f2;
+            color: var(--expense);
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            width: auto;
+            margin: 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px 0;
+            font-size: 14px;
         }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <div class="max-w-7xl mx-auto">
-        <header class="text-center py-8">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-2">Weekly Workout Plan</h1>
-            <p class="text-lg md:text-xl text-gray-600">Stay on track with your fitness goals!</p>
-        </header>
+    <header>
+        <h2>My Money Manager</h2>
+    </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- Monday -->
-            <div class="card p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Monday: Chest & Triceps</h2>
-                <ul class="space-y-3 text-gray-700">
-                    <li class="flex items-start">
-                        <span class="mr-2 text-blue-500 font-bold">•</span>
-                        <span>Dumbbell Bench Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-blue-500 font-bold">•</span>
-                        <span>Incline Dumbbell Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-blue-500 font-bold">•</span>
-                        <span>Cable Flyes: <span class="font-semibold">3 sets of 10-12 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-blue-500 font-bold">•</span>
-                        <span>Triceps Pushdowns (Rope or Bar): <span class="font-semibold">3 sets of 10-12 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-blue-500 font-bold">•</span>
-                        <span>Overhead Triceps Extension: <span class="font-semibold">3 sets of 10-12 reps</span></span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Tuesday -->
-            <div class="card p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Tuesday: Back & Biceps</h2>
-                <ul class="space-y-3 text-gray-700">
-                    <li class="flex items-start">
-                        <span class="mr-2 text-green-500 font-bold">•</span>
-                        <span>Pull-ups or Lat Pulldowns: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-green-500 font-bold">•</span>
-                        <span>Bent-Over Rows: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-green-500 font-bold">•</span>
-                        <span>Single-Arm Dumbbell Rows: <span class="font-semibold">3 sets of 10-12 reps per arm</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-green-500 font-bold">•</span>
-                        <span>Dumbbell Bicep Curls: <span class="font-semibold">3 sets of 10-12 reps per arm</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-green-500 font-bold">•</span>
-                        <span>Hammer Curls: <span class="font-semibold">3 sets of 10-12 reps</span></span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Wednesday -->
-            <div class="card p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Wednesday: Legs & Shoulders</h2>
-                <ul class="space-y-3 text-gray-700">
-                    <li class="flex items-start">
-                        <span class="mr-2 text-red-500 font-bold">•</span>
-                        <span>Barbell Squats: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-red-500 font-bold">•</span>
-                        <span>Leg Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-red-500 font-bold">•</span>
-                        <span>Romanian Deadlifts (RDLs): <span class="font-semibold">3 sets of 10-12 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-red-500 font-bold">•</span>
-                        <span>Seated Dumbbell Shoulder Press: <span class="font-semibold">3 sets of 8-10 reps</span></span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="mr-2 text-red-500 font-bold">•</span>
-                        <span>Lateral Raises: <span class="font-semibold">3 sets of 12-15 reps</span></span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Thursday -->
-            <div class="card p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Thursday: Rest or Active Recovery</h2>
-                <p class="text-gray-700">This is a crucial day for muscle recovery and growth. You can do light cardio (e.g., walking, cycling) or stretching. Avoid lifting weights.</p>
-            </div>
-
-            <!-- Friday -->
-            <div class="card p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Friday: Full Body or Repeat</h2>
-                <p class="text-gray-700 mb-3">You have a few options for Friday, depending on your energy levels and goals.</p>
-                <div class="space-y-3">
-                    <p class="font-semibold text-gray-800">Option A (Full Body):</p>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="mr-2 text-purple-500 font-bold">•</span>
-                            <span>Barbell Squats: 3 sets of 8-10 reps</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-purple-500 font-bold">•</span>
-                            <span>Dumbbell Bench Press: 3 sets of 8-10 reps</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-purple-500 font-bold">•</span>
-                            <span>Bent-Over Rows: 3 sets of 8-10 reps</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-purple-500 font-bold">•</span>
-                            <span>Overhead Press: 3 sets of 8-10 reps</span>
-                        </li>
-                    </ul>
-                    <p class="font-semibold text-gray-800">Option B (Repeat):</p>
-                    <p class="text-gray-700">Pick one of the previous workouts (e.g., Legs & Shoulders) and perform it again.</p>
-                    <p class="font-semibold text-gray-800">Option C (Rest):</p>
-                    <p class="text-gray-700">If you feel you need more recovery, take a second rest day.</p>
-                </div>
-            </div>
-
-            <!-- Saturday & Sunday -->
-            <div class="card p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Saturday & Sunday: Rest</h2>
-                <p class="text-gray-700">Allow your body to recover completely. This is when your muscles repair and grow stronger. Enjoy your time off!</p>
-            </div>
-
+    <!-- Dashboard -->
+    <div class="dashboard">
+        <div class="card hero">
+            <h3>Remaining Budget</h3>
+            <p id="remaining-budget">₹0</p>
+        </div>
+        <div class="card">
+            <h3>Total Expenses</h3>
+            <p class="c-expense" id="total-expenses">₹0</p>
+        </div>
+        <div class="card">
+            <h3>Budget Limit</h3>
+            <p id="budget-limit-display">₹0</p>
+        </div>
+        <div class="card">
+            <h3>Borrowed (I Owe)</h3>
+            <p class="c-borrowed" id="total-borrowed">₹0</p>
+        </div>
+        <div class="card">
+            <h3>Lent (Owed to Me)</h3>
+            <p class="c-lent" id="total-lent">₹0</p>
         </div>
     </div>
-    
+
+    <!-- Set Budget Form -->
+    <div class="form-section">
+        <h3 class="section-title">Monthly Budget</h3>
+        <div class="input-group">
+            <input type="number" id="budget-input" placeholder="Enter Amount">
+            <button class="btn-small" onclick="setBudget()">Save</button>
+        </div>
+    </div>
+
+    <!-- Add Transaction Form -->
+    <div class="form-section">
+        <h3 class="section-title">New Transaction</h3>
+        <input type="text" id="desc" placeholder="What was this for? (e.g., Groceries)">
+        <div class="input-group">
+            <input type="number" id="amount" placeholder="Amount (₹)">
+            <input type="date" id="t-date">
+        </div>
+        <select id="type">
+            <option value="expense">Expense (Money Spent)</option>
+            <option value="borrowed">Borrowed (Received a loan)</option>
+            <option value="lent">Lent (Gave a loan)</option>
+        </select>
+        <button onclick="addTransaction()">Add Transaction</button>
+    </div>
+
+    <!-- Transaction History -->
+    <div class="history">
+        <h3 class="section-title">Recent History</h3>
+        <div id="transaction-list">
+            <!-- Transactions injected here via JS -->
+        </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <button class="btn-danger" onclick="clearAllData()">Clear All Data (Start Fresh)</button>
+
+    <script>
+        // 1. Initialize data
+        let budget = parseFloat(localStorage.getItem('myBudget')) || 0;
+        let transactions = JSON.parse(localStorage.getItem('myTransactions')) || [];
+
+        // Set default date in input to today
+        document.getElementById('t-date').valueAsDate = new Date();
+
+        // Helper function to format money nicely with commas
+        function formatMoney(amount) {
+            return '₹' + amount.toLocaleString('en-IN');
+        }
+
+        // 2. Update the UI
+        function updateUI() {
+            let totalExpense = 0;
+            let totalBorrowed = 0;
+            let totalLent = 0;
+
+            const listElement = document.getElementById('transaction-list');
+            listElement.innerHTML = '';
+
+            // Handle empty state
+            if (transactions.length === 0) {
+                listElement.innerHTML = '<p class="empty-state">No transactions yet. Add one above!</p>';
+            }
+
+            transactions.forEach((t, index) => {
+                if (t.type === 'expense') totalExpense += t.amount;
+                if (t.type === 'borrowed') totalBorrowed += t.amount;
+                if (t.type === 'lent') totalLent += t.amount;
+
+                // Determine badge color and label based on type
+                let badgeClass = 'bg-expense';
+                let amountColor = 'c-expense';
+                let typeLabel = 'Expense';
+                
+                if (t.type === 'borrowed') {
+                    badgeClass = 'bg-borrowed';
+                    amountColor = 'c-borrowed';
+                    typeLabel = 'Borrowed';
+                } else if (t.type === 'lent') {
+                    badgeClass = 'bg-lent';
+                    amountColor = 'c-lent';
+                    typeLabel = 'Lent';
+                }
+
+                // Format the display date
+                const dateObj = new Date(t.date);
+                const dateString = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                // Create transaction element
+                const div = document.createElement('div');
+                div.classList.add('transaction');
+                div.innerHTML = `
+                    <div class="t-left">
+                        <div class="t-badge ${badgeClass}"></div>
+                        <div class="t-info">
+                            <span class="t-desc">${t.desc}</span>
+                            <span class="t-date">${typeLabel} • ${dateString}</span>
+                        </div>
+                    </div>
+                    <div class="t-right">
+                        <span class="t-amount ${amountColor}">${formatMoney(t.amount)}</span>
+                        <button class="delete-btn" onclick="deleteTransaction(${index})">Remove</button>
+                    </div>
+                `;
+                listElement.appendChild(div);
+            });
+
+            // Update Dashboard UI
+            document.getElementById('budget-limit-display').innerText = formatMoney(budget);
+            document.getElementById('total-expenses').innerText = formatMoney(totalExpense);
+            document.getElementById('total-borrowed').innerText = formatMoney(totalBorrowed);
+            document.getElementById('total-lent').innerText = formatMoney(totalLent);
+            
+            let remaining = budget - totalExpense;
+            let remainingEl = document.getElementById('remaining-budget');
+            remainingEl.innerText = formatMoney(remaining);
+            
+            // Save state
+            localStorage.setItem('myTransactions', JSON.stringify(transactions));
+            localStorage.setItem('myBudget', budget);
+        }
+
+        // 3. Add transaction
+        function addTransaction() {
+            const desc = document.getElementById('desc').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const type = document.getElementById('type').value;
+            const date = document.getElementById('t-date').value;
+
+            if (desc.trim() === '' || isNaN(amount) || amount <= 0 || !date) {
+                alert('Please fill out all fields correctly.');
+                return;
+            }
+
+            const transaction = { desc, amount, type, date, id: Date.now() };
+            transactions.unshift(transaction); // Add to beginning of array
+
+            // Reset inputs
+            document.getElementById('desc').value = '';
+            document.getElementById('amount').value = '';
+            document.getElementById('t-date').valueAsDate = new Date();
+
+            updateUI();
+        }
+
+        // 4. Set Budget
+        function setBudget() {
+            const input = parseFloat(document.getElementById('budget-input').value);
+            if (!isNaN(input) && input >= 0) {
+                budget = input;
+                document.getElementById('budget-input').value = '';
+                updateUI();
+            }
+        }
+
+        // 5. Delete single transaction
+        function deleteTransaction(index) {
+            if(confirm("Are you sure you want to delete this transaction?")) {
+                transactions.splice(index, 1);
+                updateUI();
+            }
+        }
+
+        // 6. Clear everything
+        function clearAllData() {
+            if(confirm("WARNING: This will delete all your budget and transaction history. Are you sure?")) {
+                localStorage.removeItem('myTransactions');
+                localStorage.removeItem('myBudget');
+                transactions = [];
+                budget = 0;
+                updateUI();
+            }
+        }
+
+        // Initialize UI on load
+        updateUI();
+    </script>
 </body>
 </html>
